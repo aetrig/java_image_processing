@@ -45,6 +45,7 @@ public class MainBody extends AnchorPane {
 		fileChooser.getExtensionFilters().add(
 				new FileChooser.ExtensionFilter("JPG", "*.jpg"));
 		choice.getChildren().add(BtnVbox);
+
 		fileBtn.setOnAction(event -> {
 			chosenImg = fileChooser.showOpenDialog(fileBtn.getScene().getWindow());
 			if (chosenImg != null && chosenImg.exists() && chosenImg.getName().endsWith(".jpg")) { // ||
@@ -70,6 +71,9 @@ public class MainBody extends AnchorPane {
 				rightIV.setImage(null);
 				App.BtnsDisabled.setValue(true);
 			}
+		});
+		saveBtn.setOnAction(event -> {
+			SaveFileModal.show();
 		});
 
 		AnchorPane.setLeftAnchor(leftVBox, 20.0d);

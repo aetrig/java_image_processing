@@ -9,10 +9,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 
 public class Toast {
+	private static Stage toastStage = new Stage(StageStyle.TRANSPARENT);
+
 	public static void show(Stage parentStage, String toastText, int durationMilliseconds) {
 		Platform.runLater(() -> {
-			Stage toastStage = new Stage();
-			toastStage.initStyle(StageStyle.TRANSPARENT);
 			toastStage.setResizable(false);
 			toastStage.setAlwaysOnTop(true);
 			Label toastLabel = new Label(toastText);
@@ -43,5 +43,11 @@ public class Toast {
 			pause.setOnFinished(event -> toastStage.close());
 			pause.play();
 		});
+	}
+
+	public static void close() {
+		if (toastStage.isShowing()) {
+			toastStage.close();
+		}
 	}
 }

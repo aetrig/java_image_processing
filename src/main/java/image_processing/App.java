@@ -30,6 +30,10 @@ public class App extends Application {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+        stage.setOnCloseRequest(event -> {
+            SaveFileModal.close();
+            Toast.close();
+        });
     }
 
     public static void main(String[] args) {
