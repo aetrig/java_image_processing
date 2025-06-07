@@ -21,9 +21,15 @@ public class SaveFileModal {
 			modalStage.setResizable(false);
 			modalStage.setAlwaysOnTop(true);
 			TextField fileNameInput = new TextField();
+			Label tooLittleChars = new Label();
+
 			fileNameInput.addEventFilter(KeyEvent.KEY_TYPED, event -> {
-				if (fileNameInput.getLength() >= 10) {
+				if (fileNameInput.getLength() >= 100) {
 					event.consume();
+				}
+				if (fileNameInput.getLength() >= 2) {
+					tooLittleChars.setText("");
+					tooLittleChars.setStyle("-fx-font-size: 15px;");
 				}
 			});
 			Button saveBtn = new Button("Zapisz");
@@ -38,10 +44,16 @@ public class SaveFileModal {
 				warning.setTextFill(Color.ORANGE);
 				warning.setWrapText(true);
 			}
+			saveBtn.setOnAction(event -> {
+				if (fileNameInput.getLength() < 3) {
+					tooLittleChars.setText("Wpisz co najmniej 3 znaki");
+					tooLittleChars.setStyle("-fx-font-size: 15px;");
+				}
+			});
 			HBox buttons = new HBox(saveBtn, cancelBtn);
 			buttons.setAlignment(Pos.CENTER);
 			buttons.setSpacing(20.0d);
-			VBox container = new VBox(warning, fileNameInput, buttons);
+			VBox container = new VBox(warning, fileNameInput, tooLittleChars, buttons);
 			container.setAlignment(Pos.CENTER);
 			container.setSpacing(20.0d);
 			container.setStyle("-fx-background-color: lightslategray;");
