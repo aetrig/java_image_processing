@@ -16,6 +16,7 @@ public class App extends Application {
     private static Scene scene;
 
     public static BooleanProperty BtnsDisabled = new SimpleBooleanProperty(true);
+    public static BooleanProperty ProcessedImage = new SimpleBooleanProperty(false);
 
     @Override
     public void start(Stage stage) throws IOException {

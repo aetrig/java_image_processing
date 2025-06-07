@@ -38,6 +38,7 @@ public class ProcessingChoice extends VBox {
 			if (operationType.getValue() == null) {
 				Toast.show((Stage) label.getScene().getWindow(), "Nie wybrano operacji do wykonania", 2000);
 			}
+			App.ProcessedImage.setValue(true);
 		});
 
 		// HBox for ChoiceBox and Button

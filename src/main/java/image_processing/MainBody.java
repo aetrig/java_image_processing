@@ -56,6 +56,7 @@ public class MainBody extends AnchorPane {
 				rightImg = new Image(chosenImg.toURI().toString(), 400.0d, 600.0d, true, true);
 				rightIV.setImage(rightImg);
 				App.BtnsDisabled.setValue(false);
+				App.ProcessedImage.setValue(false);
 			} else if (chosenImg != null && !chosenImg.getName().endsWith(".jpg")) {
 				Toast.show((Stage) fileBtn.getScene().getWindow(), "Niedozwolony format pliku", 2000);
 				leftImg = null;
@@ -63,6 +64,8 @@ public class MainBody extends AnchorPane {
 				leftIV.setImage(null);
 				rightIV.setImage(null);
 				App.BtnsDisabled.setValue(true);
+				App.ProcessedImage.setValue(false);
+
 			} else {
 				Toast.show((Stage) fileBtn.getScene().getWindow(), "Nie udało się załadować pliku", 2000);
 				leftImg = null;
@@ -70,6 +73,7 @@ public class MainBody extends AnchorPane {
 				leftIV.setImage(null);
 				rightIV.setImage(null);
 				App.BtnsDisabled.setValue(true);
+				App.ProcessedImage.setValue(false);
 			}
 		});
 		saveBtn.setOnAction(event -> {
