@@ -18,8 +18,8 @@ public class Toast {
 			Label toastLabel = new Label(toastText);
 			toastLabel.setWrapText(true);
 			toastLabel.setStyle(
-					" -fx-color: rgba(0, 0, 0, 0.7);" +
-							"-fx-background-color: rgba(191, 191, 191, 0.7);" +
+					" -fx-color: rgba(0, 0, 0, 1);" +
+							"-fx-background-color: rgba(191, 191, 191, 0.5);" +
 							"-fx-font-size: 17px;");
 
 			Scene toastScene = new Scene(toastLabel);
