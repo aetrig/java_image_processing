@@ -1,0 +1,44 @@
+.header {
+	-fx-background-color: lightgray;
+	background-color: lightgray;
+}
+
+.header-label {
+	-fx-font-size: 40px;
+	-fx-padding: 0px;
+	font-size: 0px;
+	padding: 0px;
+}
+
+.footer {
+	-fx-background-color: lightgray;
+	background-color: lightgray;
+}
+
+.footer-label {
+	-fx-font-size: 17px;
+	-fx-padding: 3px;
+	font-size: 0px;
+	padding: 0px;
+}
+
+.welcome-label {
+	-fx-font-size: 25px;
+	font-size: 0px;
+}
+
+.operation-choice-box {
+	-fx-font-size: 15px;
+	-fx-font-weight: bold;
+	font-weight: normal;
+	font-size: 0px;
+}
+
+.toast {
+	background-color: gray;
+	/* -fx-background-color: gray; */
+	color: rgba(127, 127, 127, 0.7);
+	/* -fx-color: rgba(0, 0, 0, 0.7); */
+	-fx-font-size: 200px;
+	font-size: 0px;
+}

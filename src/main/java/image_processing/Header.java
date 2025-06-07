@@ -16,7 +16,10 @@ public class Header extends HBox {
 		image = new Image(getClass().getResourceAsStream(imageLocation), 60.0d, 60.0d, true, true);
 		imageView = new ImageView(image);
 		label = new Label(Text);
+		label.getStyleClass().add("header-label");
+		this.setSpacing(5.0d);
 		this.getChildren().add(imageView);
 		this.getChildren().add(label);
+		this.getStyleClass().add("header");
 	}
 }

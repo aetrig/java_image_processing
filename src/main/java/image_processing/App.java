@@ -15,13 +15,14 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        Header header = new Header("logo.jpg", "Politechnika Wrocławska");
+        Header header = new Header("logo.jpg", "Image Processing App");
         Footer footer = new Footer("Mateusz Gosztyła");
-        MainBody mainBody = new MainBody("Welcome to the app");
+        MainBody mainBody = new MainBody("Welcome to image processing app, choose an operation");
 
         MainScreen screen = new MainScreen(header, footer, mainBody);
 
         scene = new Scene(screen, 1600, 900);
+        scene.getStylesheets().add(getClass().getResource("/image_processing/styles.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }

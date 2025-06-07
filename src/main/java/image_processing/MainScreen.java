@@ -15,6 +15,7 @@ public class MainScreen extends AnchorPane {
 		this.getChildren().addAll(header, footer, mainBody);
 		AnchorPane.setTopAnchor(header, 0.0d);
 		AnchorPane.setLeftAnchor(header, 0.0d);
+		AnchorPane.setRightAnchor(header, 0.0d);
 
 		AnchorPane.setTopAnchor(mainBody, 0.0d);
 		AnchorPane.setLeftAnchor(mainBody, 0.0d);
@@ -23,5 +24,6 @@ public class MainScreen extends AnchorPane {
 
 		AnchorPane.setBottomAnchor(footer, 0.0d);
 		AnchorPane.setRightAnchor(footer, 0.0d);
+		AnchorPane.setLeftAnchor(footer, 0.0d);
 	}
 }
