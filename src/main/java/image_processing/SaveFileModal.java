@@ -1,6 +1,13 @@
 package image_processing;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import javax.imageio.ImageIO;
+
 import javafx.application.Platform;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -48,6 +55,28 @@ public class SaveFileModal {
 				if (fileNameInput.getLength() < 3) {
 					tooLittleChars.setText("Wpisz co najmniej 3 znaki");
 					tooLittleChars.setStyle("-fx-font-size: 15px;");
+				} else {
+					if (Files.exists(Paths.get(System.getProperty("user.home"),
+							"Pictures", fileNameInput.getText() + ".jpg"))) {
+						Toast.show((Stage) App.scene.getWindow(),
+								"Plik " + fileNameInput.getText()
+										+ ".jpg już istnieje w systemie. Podaj inną nazwę pliku!",
+								2000);
+					} else {
+						try {
+							File fileToSave = Files.createFile(Paths.get(System.getProperty("user.home"),
+									"Pictures", fileNameInput.getText() + ".jpg")).toFile();
+							ImageIO.write(SwingFXUtils.fromFXImage(MainBody.rightImg, null), "jpg", fileToSave);
+							Toast.show((Stage) App.scene.getWindow(), "Zapisano obraz w pliku " + fileNameInput
+									.getText() + ".jpg", 2000);
+						} catch (Exception e) {
+							Toast.show((Stage) App.scene.getWindow(),
+									"Nie udało się zapisać pliku " + fileNameInput.getText()
+											+ ".jpg",
+									2000);
+						}
+					}
+
 				}
 			});
 			HBox buttons = new HBox(saveBtn, cancelBtn);

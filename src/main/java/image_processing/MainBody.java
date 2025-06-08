@@ -16,7 +16,7 @@ public class MainBody extends AnchorPane {
 	private ImageView rightIV;
 	private ProcessingChoice choice;
 	private Image leftImg;
-	private Image rightImg;
+	public static Image rightImg;
 	private Button fileBtn = new Button("Wybierz plik");
 	private Button saveBtn = new Button("Zapisz plik");
 	FileChooser fileChooser = new FileChooser();
@@ -50,7 +50,7 @@ public class MainBody extends AnchorPane {
 			chosenImg = fileChooser.showOpenDialog(fileBtn.getScene().getWindow());
 			if (chosenImg != null && chosenImg.exists() && chosenImg.getName().endsWith(".jpg")) { // ||
 				// chosenImg.getName().endsWith(".jpeg")
-				Toast.show((Stage) fileBtn.getScene().getWindow(), "Pomyślnie załadowano plik", 2000);
+				Toast.show((Stage) App.scene.getWindow(), "Pomyślnie załadowano plik", 2000);
 				leftImg = new Image(chosenImg.toURI().toString(), 400.0d, 600.0d, true, true);
 				leftIV.setImage(leftImg);
 				rightImg = new Image(chosenImg.toURI().toString(), 400.0d, 600.0d, true, true);
@@ -58,7 +58,7 @@ public class MainBody extends AnchorPane {
 				App.BtnsDisabled.setValue(false);
 				App.ProcessedImage.setValue(false);
 			} else if (chosenImg != null && !chosenImg.getName().endsWith(".jpg")) {
-				Toast.show((Stage) fileBtn.getScene().getWindow(), "Niedozwolony format pliku", 2000);
+				Toast.show((Stage) App.scene.getWindow(), "Niedozwolony format pliku", 2000);
 				leftImg = null;
 				rightImg = null;
 				leftIV.setImage(null);
@@ -67,7 +67,7 @@ public class MainBody extends AnchorPane {
 				App.ProcessedImage.setValue(false);
 
 			} else {
-				Toast.show((Stage) fileBtn.getScene().getWindow(), "Nie udało się załadować pliku", 2000);
+				Toast.show((Stage) App.scene.getWindow(), "Nie udało się załadować pliku", 2000);
 				leftImg = null;
 				rightImg = null;
 				leftIV.setImage(null);

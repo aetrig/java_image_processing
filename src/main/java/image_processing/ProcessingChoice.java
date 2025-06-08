@@ -36,7 +36,7 @@ public class ProcessingChoice extends VBox {
 		executeOperationBtn.disableProperty().bind(App.BtnsDisabled);
 		executeOperationBtn.setOnAction(event -> {
 			if (operationType.getValue() == null) {
-				Toast.show((Stage) label.getScene().getWindow(), "Nie wybrano operacji do wykonania", 2000);
+				Toast.show((Stage) App.scene.getWindow(), "Nie wybrano operacji do wykonania", 2000);
 			}
 			App.ProcessedImage.setValue(true);
 		});

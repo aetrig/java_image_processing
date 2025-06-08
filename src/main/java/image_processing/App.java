@@ -13,7 +13,7 @@ import java.io.IOException;
  */
 public class App extends Application {
 
-    private static Scene scene;
+    public static Scene scene;
 
     public static BooleanProperty BtnsDisabled = new SimpleBooleanProperty(true);
     public static BooleanProperty ProcessedImage = new SimpleBooleanProperty(false);
