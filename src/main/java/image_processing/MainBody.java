@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 public class MainBody extends AnchorPane {
 	private ImageView leftIV;
-	private ImageView rightIV;
+	public static ImageView rightIV;
 	private ProcessingChoice choice;
 	private Image leftImg;
 	public static Image rightImg;
@@ -24,20 +24,28 @@ public class MainBody extends AnchorPane {
 	private VBox leftVBox;
 	private VBox rightVBox;
 	private VBox BtnVbox;
+	private Button scaleBtn = new Button("Skalowanie");
 
 	public MainBody(ProcessingChoice choice) {
 		this.choice = choice;
 
 		leftIV = new ImageView();
+		leftIV.setFitWidth(400.0d);
+		leftIV.setFitHeight(600.0d);
+		leftIV.setPreserveRatio(true);
 		rightIV = new ImageView();
+		rightIV.setFitWidth(400.0d);
+		rightIV.setFitHeight(600.0d);
+		rightIV.setPreserveRatio(true);
 		leftVBox = new VBox(leftIV);
 		leftVBox.setAlignment(Pos.CENTER);
 		rightVBox = new VBox(rightIV);
 		rightVBox.setAlignment(Pos.CENTER);
 
 		saveBtn.disableProperty().bind(App.BtnsDisabled);
+		scaleBtn.disableProperty().bind(App.BtnsDisabled);
 
-		BtnVbox = new VBox(fileBtn, saveBtn);
+		BtnVbox = new VBox(fileBtn, saveBtn, scaleBtn);
 		BtnVbox.setAlignment(Pos.CENTER);
 		BtnVbox.setSpacing(5.0d);
 
@@ -51,9 +59,9 @@ public class MainBody extends AnchorPane {
 			if (chosenImg != null && chosenImg.exists() && chosenImg.getName().endsWith(".jpg")) { // ||
 				// chosenImg.getName().endsWith(".jpeg")
 				Toast.show((Stage) App.scene.getWindow(), "Pomyślnie załadowano plik", 2000);
-				leftImg = new Image(chosenImg.toURI().toString(), 400.0d, 600.0d, true, true);
+				leftImg = new Image(chosenImg.toURI().toString());
 				leftIV.setImage(leftImg);
-				rightImg = new Image(chosenImg.toURI().toString(), 400.0d, 600.0d, true, true);
+				rightImg = new Image(chosenImg.toURI().toString());
 				rightIV.setImage(rightImg);
 				App.BtnsDisabled.setValue(false);
 				App.ProcessedImage.setValue(false);
@@ -78,6 +86,9 @@ public class MainBody extends AnchorPane {
 		});
 		saveBtn.setOnAction(event -> {
 			SaveFileModal.show();
+		});
+		scaleBtn.setOnAction(event -> {
+			ScaleModal.show();
 		});
 
 		AnchorPane.setLeftAnchor(leftVBox, 20.0d);
