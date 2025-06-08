@@ -3,11 +3,17 @@ package image_processing;
 import java.io.File;
 
 import javafx.geometry.Pos;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Transform;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -25,10 +31,19 @@ public class MainBody extends AnchorPane {
 	private VBox rightVBox;
 	private VBox BtnVbox;
 	private Button scaleBtn = new Button("Skalowanie");
+	private Button rotateLeftBtn = new Button();
+	private Button rotateRightBtn = new Button();
+	private HBox rotateBtns = new HBox(rotateLeftBtn, rotateRightBtn);
 
 	public MainBody(ProcessingChoice choice) {
 		this.choice = choice;
 
+		Image rotateLeftIcon = new Image(getClass().getResourceAsStream("/image_processing/rotate_left.png"));
+		Image rotateRightIcon = new Image(getClass().getResourceAsStream("/image_processing/rotate_right.png"));
+		rotateLeftBtn.setGraphic(new ImageView(rotateLeftIcon));
+		rotateRightBtn.setGraphic(new ImageView(rotateRightIcon));
+		rotateBtns.setSpacing(5.0d);
+		rotateBtns.setAlignment(Pos.CENTER);
 		leftIV = new ImageView();
 		leftIV.setFitWidth(400.0d);
 		leftIV.setFitHeight(600.0d);
@@ -44,6 +59,8 @@ public class MainBody extends AnchorPane {
 
 		saveBtn.disableProperty().bind(App.BtnsDisabled);
 		scaleBtn.disableProperty().bind(App.BtnsDisabled);
+		rotateLeftBtn.disableProperty().bind(App.BtnsDisabled);
+		rotateRightBtn.disableProperty().bind(App.BtnsDisabled);
 
 		BtnVbox = new VBox(fileBtn, saveBtn, scaleBtn);
 		BtnVbox.setAlignment(Pos.CENTER);
@@ -53,6 +70,7 @@ public class MainBody extends AnchorPane {
 		fileChooser.getExtensionFilters().add(
 				new FileChooser.ExtensionFilter("JPG", "*.jpg"));
 		choice.getChildren().add(BtnVbox);
+		choice.getChildren().add(rotateBtns);
 
 		fileBtn.setOnAction(event -> {
 			chosenImg = fileChooser.showOpenDialog(fileBtn.getScene().getWindow());
@@ -90,7 +108,24 @@ public class MainBody extends AnchorPane {
 		scaleBtn.setOnAction(event -> {
 			ScaleModal.show();
 		});
+		rotateRightBtn.setOnAction(event -> {
+			// Canvas canvas = new Canvas(rightImg.getHeight(), rightImg.getWidth());
+			// GraphicsContext gc = canvas.getGraphicsContext2D();
+			// double PivotX = rightImg.getWidth()/2;
+			// double PivotY = rightImg.getHeight()/2;
+			// double angle = 90;
+			// gc.rotate(angle);
+			// rightIV.setRotate(90.0);
+			SnapshotParameters params = new SnapshotParameters();
+			Transform rotation = new Rotate(90);
+			params.setTransform(rotation);
+			rightImg = rightIV.snapshot(params, null);
+			rightIV.setImage(rightImg);
+			// rightIV.setRotate(0.0);
+		});
+		rotateLeftBtn.setOnAction(event -> {
 
+		});
 		AnchorPane.setLeftAnchor(leftVBox, 20.0d);
 		AnchorPane.setTopAnchor(leftVBox, 0.0d);
 		AnchorPane.setBottomAnchor(leftVBox, 0.0d);
