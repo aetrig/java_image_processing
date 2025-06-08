@@ -116,12 +116,15 @@ public class MainBody extends AnchorPane {
 			// double angle = 90;
 			// gc.rotate(angle);
 			// rightIV.setRotate(90.0);
-			SnapshotParameters params = new SnapshotParameters();
-			Transform rotation = new Rotate(90);
-			params.setTransform(rotation);
-			rightImg = rightIV.snapshot(params, null);
-			rightIV.setImage(rightImg);
-			// rightIV.setRotate(0.0);
+
+			// ? Kinda Works but not really I am going to sleep
+			// SnapshotParameters params = new SnapshotParameters();
+			// Transform rotation = new Rotate(90);
+			// params.setTransform(rotation);
+			// rightImg = rightIV.snapshot(params, null);
+			// System.out.println(rightImg.getHeight());
+			// System.out.println(rightImg.getWidth());
+			// rightIV.setImage(rightImg);
 		});
 		rotateLeftBtn.setOnAction(event -> {
 

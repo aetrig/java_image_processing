@@ -19,6 +19,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.scene.control.Label;
+import java.awt.image.BufferedImage;
 
 public class SaveFileModal {
 	private static Stage modalStage = new Stage(StageStyle.UNDECORATED);
@@ -66,7 +67,11 @@ public class SaveFileModal {
 						try {
 							File fileToSave = Files.createFile(Paths.get(System.getProperty("user.home"),
 									"Pictures", fileNameInput.getText() + ".jpg")).toFile();
-							ImageIO.write(SwingFXUtils.fromFXImage(MainBody.rightImg, null), "jpg", fileToSave);
+							ImageIO.write(
+									(SwingFXUtils.fromFXImage(MainBody.rightImg,
+											new BufferedImage((int) MainBody.rightImg.getWidth(),
+													(int) MainBody.rightImg.getHeight(), BufferedImage.TYPE_INT_RGB))),
+									"jpg", fileToSave);
 							Toast.show((Stage) App.scene.getWindow(), "Zapisano obraz w pliku " + fileNameInput
 									.getText() + ".jpg", 2000);
 						} catch (Exception e) {
