@@ -8,12 +8,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.PixelReader;
-import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class ProcessingChoice extends VBox {
@@ -49,12 +46,15 @@ public class ProcessingChoice extends VBox {
 					Image rightImg = MainBody.rightImg;
 					WritableImage negativeImage = new WritableImage((int) rightImg.getWidth(),
 							(int) rightImg.getHeight());
-					PixelWriter pw = negativeImage.getPixelWriter();
-					PixelReader pr = rightImg.getPixelReader();
-					for (int x = 0; x < rightImg.getWidth(); x++) {
-						for (int y = 0; y < rightImg.getHeight(); y++) {
-							pw.setColor(x, y, pr.getColor(x, y).invert());
-						}
+					NegativeThreaded[] threads = new NegativeThreaded[4];
+					for (int i = 0; i < 4; i++) {
+						threads[i] = new NegativeThreaded(i, rightImg, negativeImage);
+					}
+					for (int i = 0; i < 4; i++) {
+						threads[i].start();
+					}
+					for (int i = 0; i < 4; i++) {
+						threads[i].join();
 					}
 					MainBody.rightImg = negativeImage;
 					MainBody.rightIV.setImage(MainBody.rightImg);
@@ -69,48 +69,21 @@ public class ProcessingChoice extends VBox {
 			}
 			if (operationType.getValue() == "Konturowanie") {
 				try {
-					int[][] convolutionMatrix = { { -1, -1, -1 }, { -1, 8, -1 }, { -1, -1, -1 } };
 					Image rightImg = MainBody.rightImg;
 					WritableImage contourImage = new WritableImage((int) rightImg.getWidth(),
 							(int) rightImg.getHeight());
 
-					PixelWriter pw = contourImage.getPixelWriter();
-					PixelReader pr = rightImg.getPixelReader();
-					for (int x = 0; x < rightImg.getWidth(); x++) {
-						pw.setColor(x, 0, pr.getColor(x, 0).grayscale());
-						pw.setColor(x, (int) rightImg.getHeight() - 1,
-								pr.getColor(x, (int) rightImg.getHeight() - 1).grayscale());
+					ContourThreaded[] threads = new ContourThreaded[4];
+					for (int i = 0; i < 4; i++) {
+						threads[i] = new ContourThreaded(i, rightImg, contourImage);
 					}
-					for (int y = 0; y < rightImg.getHeight(); y++) {
-						pw.setColor(0, y, pr.getColor(0, y).grayscale());
-						pw.setColor((int) rightImg.getWidth() - 1, y,
-								pr.getColor((int) rightImg.getWidth() - 1, y).grayscale());
+					for (int i = 0; i < 4; i++) {
+						threads[i].start();
 					}
-					for (int x = 1; x < rightImg.getWidth() - 1; x++) {
-						for (int y = 1; y < rightImg.getHeight() - 1; y++) {
-							Color[][] colors = new Color[3][3];
-							for (int i = 0; i < 3; i++) {
-								for (int j = 0; j < 3; j++) {
-									colors[i][j] = pr.getColor(x + i - 1, y + j - 1).grayscale();
-								}
-							}
-							int[][] grays = new int[3][3];
-							for (int i = 0; i < 3; i++) {
-								for (int j = 0; j < 3; j++) {
-									grays[i][j] = (int) (colors[i][j].getRed() * 255 * convolutionMatrix[i][j]);
-								}
-							}
-							int Gray = 0;
-							for (int i = 0; i < 3; i++) {
-								for (int j = 0; j < 3; j++) {
-									Gray += grays[i][j];
-								}
-							}
-							Gray = Math.max(Gray, 0);
-							Gray = Math.min(Gray, 255);
-							pw.setColor(x, y, Color.grayRgb(Gray));
-						}
+					for (int i = 0; i < 4; i++) {
+						threads[i].join();
 					}
+
 					MainBody.rightImg = contourImage;
 					MainBody.rightIV.setImage(MainBody.rightImg);
 					App.ProcessedImage.setValue(true);

@@ -6,13 +6,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.image.PixelReader;
-import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -49,24 +46,22 @@ public class ThresholdingModal {
 						Image rightImg = MainBody.rightImg;
 						WritableImage thresholdImage = new WritableImage((int) rightImg.getWidth(),
 								(int) rightImg.getHeight());
-						PixelWriter pw = thresholdImage.getPixelWriter();
-						PixelReader tpr = thresholdImage.getPixelReader();
-						PixelReader pr = rightImg.getPixelReader();
-						for (int x = 0; x < rightImg.getWidth(); x++) {
-							for (int y = 0; y < rightImg.getHeight(); y++) {
-								pw.setColor(x, y, pr.getColor(x, y).grayscale());
-								if (tpr.getColor(x, y).getRed() * 255 < Double.parseDouble(thresholdInput.getText())) {
-									pw.setColor(x, y, Color.BLACK);
-								} else {
-									pw.setColor(x, y, Color.WHITE);
-								}
-							}
+						ThresholdThreaded[] threads = new ThresholdThreaded[4];
+						for (int i = 0; i < 4; i++) {
+							threads[i] = new ThresholdThreaded(i, rightImg, thresholdImage,
+									Integer.parseInt(thresholdInput.getText()));
+						}
+						for (int i = 0; i < 4; i++) {
+							threads[i].start();
+						}
+						for (int i = 0; i < 4; i++) {
+							threads[i].join();
 						}
 						MainBody.rightImg = thresholdImage;
 						MainBody.rightIV.setImage(MainBody.rightImg);
 						App.ProcessedImage.setValue(true);
 						Toast.show((Stage) App.scene.getWindow(), "Progowanie zostało przeprowadzone pomyślnie!", 2000);
-					} catch (NumberFormatException e) {
+					} catch (Exception e) {
 						Toast.show((Stage) App.scene.getWindow(), "Nie udało się wykonać progowania.", 2000);
 					}
 				} else {
