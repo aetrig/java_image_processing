@@ -26,7 +26,7 @@ public class App extends Application {
 
     public static File logFile;
 
-    // 0 - CRITICAL + INFO
+    // 0 - ERROR + INFO
     // 1 - INFO
     public static int verbosityLevel;
     public static FileWriter fw;
