@@ -31,6 +31,7 @@ public class ProcessingChoice extends VBox {
 
 		// ChoiceBox
 		operationTypes.add("Negatyw");
+		operationTypes.add("Progowanie");
 		operationType.getItems().addAll(operationTypes);
 		operationType.setValue(null);
 		operationType.getStyleClass().add("operation-choice-box");
@@ -42,20 +43,28 @@ public class ProcessingChoice extends VBox {
 				Toast.show((Stage) App.scene.getWindow(), "Nie wybrano operacji do wykonania", 2000);
 			}
 			if (operationType.getValue() == "Negatyw") {
-				Image rightImg = MainBody.rightImg;
-				WritableImage negativeImage = new WritableImage((int) rightImg.getWidth(), (int) rightImg.getHeight());
-				PixelWriter pw = negativeImage.getPixelWriter();
-				PixelReader pr = rightImg.getPixelReader();
-				for (int x = 0; x < rightImg.getHeight(); x++) {
-					for (int y = 0; y < rightImg.getWidth(); y++) {
-						pw.setColor(x, y, pr.getColor(x, y).invert());
+				try {
+					Image rightImg = MainBody.rightImg;
+					WritableImage negativeImage = new WritableImage((int) rightImg.getWidth(),
+							(int) rightImg.getHeight());
+					PixelWriter pw = negativeImage.getPixelWriter();
+					PixelReader pr = rightImg.getPixelReader();
+					for (int x = 0; x < rightImg.getHeight(); x++) {
+						for (int y = 0; y < rightImg.getWidth(); y++) {
+							pw.setColor(x, y, pr.getColor(x, y).invert());
+						}
 					}
+					MainBody.rightImg = negativeImage;
+					MainBody.rightIV.setImage(MainBody.rightImg);
+					App.ProcessedImage.setValue(true);
+					Toast.show((Stage) App.scene.getWindow(), "Negatyw został wygenerowany pomyślnie!", 2000);
+				} catch (Exception e) {
+					Toast.show((Stage) App.scene.getWindow(), "Nie udało się wygenerować negatywu.", 2000);
 				}
-				MainBody.rightImg = negativeImage;
-				MainBody.rightIV.setImage(MainBody.rightImg);
-				App.ProcessedImage.setValue(true);
 			}
-			App.ProcessedImage.setValue(true);
+			if (operationType.getValue() == "Progowanie") {
+				ThresholdingModal.show();
+			}
 		});
 
 		// HBox for ChoiceBox and Button
