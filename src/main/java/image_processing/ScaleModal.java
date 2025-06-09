@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -18,14 +19,13 @@ public class ScaleModal {
 
 	public static void show() {
 		Platform.runLater(() -> {
-			double originalWidth = MainBody.rightImg.getWidth();
-			double originalHeight = MainBody.rightImg.getHeight();
 			modalStage.setResizable(false);
 			modalStage.setAlwaysOnTop(true);
 			TextField widthInput = new TextField();
 			Label widthWarning = new Label("");
 			Label heightWarning = new Label("");
 			TextField heightInput = new TextField();
+			Image beforeScaling = MainBody.rightImg;
 
 			widthInput.addEventFilter(KeyEvent.KEY_TYPED, event -> {
 				if (!event.getCharacter().matches("[0-9]")) {
@@ -67,17 +67,22 @@ public class ScaleModal {
 					heightWarning.setText("");
 				}
 				if (!heightInput.getText().isEmpty() && !widthInput.getText().isEmpty()) {
-					MainBody.rightImg = new Image(MainBody.rightImg.getUrl(), Double.parseDouble(widthInput.getText()),
-							Double.parseDouble(heightInput.getText()), false, true);
+					ImageView scaled = new ImageView(MainBody.rightImg);
+					scaled.setPreserveRatio(false);
+					scaled.setSmooth(true);
+					scaled.setFitWidth(Double.parseDouble(widthInput.getText()));
+					scaled.setFitHeight(Double.parseDouble(heightInput.getText()));
+					MainBody.rightImg = scaled.snapshot(null, null);
 					MainBody.rightIV.setImage(MainBody.rightImg);
 					App.ProcessedImage.setValue(true);
 				}
 			});
 
 			goBackBtn.setOnAction(event -> {
-				MainBody.rightImg = new Image(MainBody.rightImg.getUrl(), originalWidth,
-						originalHeight, false, true);
+				ImageView scaled = new ImageView(beforeScaling);
+				MainBody.rightImg = scaled.snapshot(null, null);
 				MainBody.rightIV.setImage(MainBody.rightImg);
+				App.ProcessedImage.setValue(true);
 			});
 
 			HBox buttons = new HBox(saveBtn, goBackBtn, cancelBtn);
