@@ -3,17 +3,15 @@ package image_processing;
 import java.io.File;
 
 import javafx.geometry.Pos;
-import javafx.scene.SnapshotParameters;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.transform.Rotate;
-import javafx.scene.transform.Transform;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -108,26 +106,29 @@ public class MainBody extends AnchorPane {
 		scaleBtn.setOnAction(event -> {
 			ScaleModal.show();
 		});
-		rotateRightBtn.setOnAction(event -> {
-			// Canvas canvas = new Canvas(rightImg.getHeight(), rightImg.getWidth());
-			// GraphicsContext gc = canvas.getGraphicsContext2D();
-			// double PivotX = rightImg.getWidth()/2;
-			// double PivotY = rightImg.getHeight()/2;
-			// double angle = 90;
-			// gc.rotate(angle);
-			// rightIV.setRotate(90.0);
-
-			// ? Kinda Works but not really I am going to sleep
-			// SnapshotParameters params = new SnapshotParameters();
-			// Transform rotation = new Rotate(90);
-			// params.setTransform(rotation);
-			// rightImg = rightIV.snapshot(params, null);
-			// System.out.println(rightImg.getHeight());
-			// System.out.println(rightImg.getWidth());
-			// rightIV.setImage(rightImg);
-		});
 		rotateLeftBtn.setOnAction(event -> {
-
+			WritableImage rotatedImage = new WritableImage((int) rightImg.getHeight(), (int) rightImg.getWidth());
+			PixelWriter pw = rotatedImage.getPixelWriter();
+			PixelReader pr = rightImg.getPixelReader();
+			for (int x = 0; x < rightImg.getHeight(); x++) {
+				for (int y = 0; y < rightImg.getWidth(); y++) {
+					pw.setColor(x, y, pr.getColor((int) rightImg.getWidth() - 1 - y, x));
+				}
+			}
+			rightImg = rotatedImage;
+			rightIV.setImage(rightImg);
+		});
+		rotateRightBtn.setOnAction(event -> {
+			WritableImage rotatedImage = new WritableImage((int) rightImg.getHeight(), (int) rightImg.getWidth());
+			PixelWriter pw = rotatedImage.getPixelWriter();
+			PixelReader pr = rightImg.getPixelReader();
+			for (int x = 0; x < rightImg.getHeight(); x++) {
+				for (int y = 0; y < rightImg.getWidth(); y++) {
+					pw.setColor(x, y, pr.getColor(y, (int) rightImg.getHeight() - 1 - x));
+				}
+			}
+			rightImg = rotatedImage;
+			rightIV.setImage(rightImg);
 		});
 		AnchorPane.setLeftAnchor(leftVBox, 20.0d);
 		AnchorPane.setTopAnchor(leftVBox, 0.0d);
