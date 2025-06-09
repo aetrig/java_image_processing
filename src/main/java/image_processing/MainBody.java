@@ -117,6 +117,7 @@ public class MainBody extends AnchorPane {
 			}
 			rightImg = rotatedImage;
 			rightIV.setImage(rightImg);
+			App.ProcessedImage.setValue(true);
 		});
 		rotateRightBtn.setOnAction(event -> {
 			WritableImage rotatedImage = new WritableImage((int) rightImg.getHeight(), (int) rightImg.getWidth());
@@ -129,6 +130,7 @@ public class MainBody extends AnchorPane {
 			}
 			rightImg = rotatedImage;
 			rightIV.setImage(rightImg);
+			App.ProcessedImage.setValue(true);
 		});
 		AnchorPane.setLeftAnchor(leftVBox, 20.0d);
 		AnchorPane.setTopAnchor(leftVBox, 0.0d);

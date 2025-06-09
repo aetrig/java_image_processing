@@ -70,6 +70,7 @@ public class ScaleModal {
 					MainBody.rightImg = new Image(MainBody.rightImg.getUrl(), Double.parseDouble(widthInput.getText()),
 							Double.parseDouble(heightInput.getText()), false, true);
 					MainBody.rightIV.setImage(MainBody.rightImg);
+					App.ProcessedImage.setValue(true);
 				}
 			});
 
