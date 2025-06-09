@@ -1,5 +1,7 @@
 package image_processing;
 
+import java.time.LocalDateTime;
+
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -75,6 +77,14 @@ public class ScaleModal {
 					MainBody.rightImg = scaled.snapshot(null, null);
 					MainBody.rightIV.setImage(MainBody.rightImg);
 					App.ProcessedImage.setValue(true);
+					try {
+						if (App.verbosityLevel <= 1) {
+							App.fw.write("=== INFO: \n    Wykonano operację skalowania "
+									+ LocalDateTime.now() + "\n");
+						}
+					} catch (Exception e2) {
+						System.out.println(e2);
+					}
 				}
 			});
 

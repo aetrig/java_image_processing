@@ -1,5 +1,6 @@
 package image_processing;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,8 +61,24 @@ public class ProcessingChoice extends VBox {
 					MainBody.rightIV.setImage(MainBody.rightImg);
 					App.ProcessedImage.setValue(true);
 					Toast.show((Stage) App.scene.getWindow(), "Negatyw został wygenerowany pomyślnie!", 2000);
+					try {
+						if (App.verbosityLevel <= 1) {
+							App.fw.write("=== INFO: \n    Wykonano operację negatywu "
+									+ LocalDateTime.now() + "\n");
+						}
+					} catch (Exception e) {
+						System.out.println(e);
+					}
 				} catch (Exception e) {
 					Toast.show((Stage) App.scene.getWindow(), "Nie udało się wygenerować negatywu.", 2000);
+					try {
+						if (App.verbosityLevel <= 1) {
+							App.fw.write("=== ERROR: \n    Operacja negatywu nie powiodła się "
+									+ LocalDateTime.now() + "\n");
+						}
+					} catch (Exception e2) {
+						System.out.println(e2);
+					}
 				}
 			}
 			if (operationType.getValue() == "Progowanie") {
@@ -88,9 +105,25 @@ public class ProcessingChoice extends VBox {
 					MainBody.rightIV.setImage(MainBody.rightImg);
 					App.ProcessedImage.setValue(true);
 					Toast.show((Stage) App.scene.getWindow(), "Konturowanie zostało przeprowadzone pomyślnie!", 2000);
+					try {
+						if (App.verbosityLevel <= 1) {
+							App.fw.write("=== INFO: \n    Wykonano operację konturowania "
+									+ LocalDateTime.now() + "\n");
+						}
+					} catch (Exception e) {
+						System.out.println(e);
+					}
 				} catch (Exception e) {
 					System.out.println(e);
 					Toast.show((Stage) App.scene.getWindow(), "Nie udało się wykonać konturowania.", 2000);
+					try {
+						if (App.verbosityLevel <= 0) {
+							App.fw.write("=== ERROR: \n    Operacja konturowania nie powiodła się "
+									+ LocalDateTime.now() + "\n");
+						}
+					} catch (Exception e2) {
+						System.out.println(e2);
+					}
 				}
 			}
 		});

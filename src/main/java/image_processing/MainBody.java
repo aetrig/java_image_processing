@@ -1,6 +1,7 @@
 package image_processing;
 
 import java.io.File;
+import java.time.LocalDateTime;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -81,6 +82,14 @@ public class MainBody extends AnchorPane {
 				rightIV.setImage(rightImg);
 				App.BtnsDisabled.setValue(false);
 				App.ProcessedImage.setValue(false);
+				try {
+					if (App.verbosityLevel <= 1) {
+						App.fw.write("=== INFO: \n    Załadowano obraz "
+								+ LocalDateTime.now() + "\n");
+					}
+				} catch (Exception e) {
+					System.out.println(e);
+				}
 			} else if (chosenImg != null && !chosenImg.getName().endsWith(".jpg")) {
 				Toast.show((Stage) App.scene.getWindow(), "Niedozwolony format pliku", 2000);
 				leftImg = null;
@@ -89,9 +98,25 @@ public class MainBody extends AnchorPane {
 				rightIV.setImage(null);
 				App.BtnsDisabled.setValue(true);
 				App.ProcessedImage.setValue(false);
+				try {
+					if (App.verbosityLevel <= 0) {
+						App.fw.write("=== ERROR: \n    Próba załadowania niedozwolonego formatu pliku "
+								+ LocalDateTime.now() + "\n");
+					}
+				} catch (Exception e) {
+					System.out.println(e);
+				}
 
 			} else {
 				Toast.show((Stage) App.scene.getWindow(), "Nie udało się załadować pliku", 2000);
+				try {
+					if (App.verbosityLevel <= 1) {
+						App.fw.write("=== ERROR: \n    Ładowanie pliku nie powiodło się "
+								+ LocalDateTime.now() + "\n");
+					}
+				} catch (Exception e) {
+					System.out.println(e);
+				}
 				leftImg = null;
 				rightImg = null;
 				leftIV.setImage(null);
@@ -118,6 +143,14 @@ public class MainBody extends AnchorPane {
 			rightImg = rotatedImage;
 			rightIV.setImage(rightImg);
 			App.ProcessedImage.setValue(true);
+			try {
+				if (App.verbosityLevel <= 1) {
+					App.fw.write("=== INFO: \n    Obrócono obraz w lewo "
+							+ LocalDateTime.now() + "\n");
+				}
+			} catch (Exception e) {
+				System.out.println(e);
+			}
 		});
 		rotateRightBtn.setOnAction(event -> {
 			WritableImage rotatedImage = new WritableImage((int) rightImg.getHeight(), (int) rightImg.getWidth());
@@ -131,6 +164,14 @@ public class MainBody extends AnchorPane {
 			rightImg = rotatedImage;
 			rightIV.setImage(rightImg);
 			App.ProcessedImage.setValue(true);
+			try {
+				if (App.verbosityLevel <= 1) {
+					App.fw.write("=== INFO: \n    Obrócono obraz w prawo "
+							+ LocalDateTime.now() + "\n");
+				}
+			} catch (Exception e) {
+				System.out.println(e);
+			}
 		});
 		AnchorPane.setLeftAnchor(leftVBox, 20.0d);
 		AnchorPane.setTopAnchor(leftVBox, 0.0d);

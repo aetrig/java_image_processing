@@ -3,6 +3,7 @@ package image_processing;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 
 import javax.imageio.ImageIO;
 
@@ -74,11 +75,29 @@ public class SaveFileModal {
 									"jpg", fileToSave);
 							Toast.show((Stage) App.scene.getWindow(), "Zapisano obraz w pliku " + fileNameInput
 									.getText() + ".jpg", 2000);
+							try {
+								if (App.verbosityLevel <= 1) {
+									App.fw.write("=== INFO: \n    Zapisano obraz " + fileNameInput.getText() + ".jpg "
+											+ LocalDateTime.now() + "\n");
+								}
+							} catch (Exception e) {
+								System.out.println(e);
+							}
 						} catch (Exception e) {
 							Toast.show((Stage) App.scene.getWindow(),
 									"Nie udało się zapisać pliku " + fileNameInput.getText()
 											+ ".jpg",
 									2000);
+							try {
+								if (App.verbosityLevel <= 0) {
+									App.fw.write("=== ERROR: \n    Zapisywanie obrazu nie powiodło się "
+											+ fileNameInput.getText()
+											+ ".jpg "
+											+ LocalDateTime.now() + "\n");
+								}
+							} catch (Exception e2) {
+								System.out.println(e2);
+							}
 						}
 					}
 

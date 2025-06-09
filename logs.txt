@@ -1,0 +1,20 @@
+    === INFO: 
+        Aplikacja uruchomiona 2025-06-09T14:49:29.255952500
+=== INFO: 
+    Załadowano obraz 2025-06-09T14:49:35.488443200
+    === INFO: 
+        Aplikacja zamknięta 2025-06-09T14:49:37.855165100
+    === INFO: 
+        Aplikacja uruchomiona 2025-06-09T14:49:40.357109200
+=== INFO: 
+    Załadowano obraz 2025-06-09T14:49:47.421814900
+=== INFO: 
+    Wykonano operację negatywu 2025-06-09T14:49:51.407285800
+=== INFO: 
+    Obrócono obraz w prawo 2025-06-09T14:49:53.476033900
+=== INFO: 
+    Obrócono obraz w prawo 2025-06-09T14:49:54.155020600
+=== INFO: 
+    Zapisano obraz negativeCastleUpsideDown.jpg 2025-06-09T14:50:03.643258100
+    === INFO: 
+        Aplikacja zamknięta 2025-06-09T14:50:05.944036100

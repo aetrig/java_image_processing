@@ -1,5 +1,7 @@
 package image_processing;
 
+import java.time.LocalDateTime;
+
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -61,11 +63,35 @@ public class ThresholdingModal {
 						MainBody.rightIV.setImage(MainBody.rightImg);
 						App.ProcessedImage.setValue(true);
 						Toast.show((Stage) App.scene.getWindow(), "Progowanie zostało przeprowadzone pomyślnie!", 2000);
+						try {
+							if (App.verbosityLevel <= 1) {
+								App.fw.write("=== INFO: \n    Wykonano operację progowania "
+										+ LocalDateTime.now() + "\n");
+							}
+						} catch (Exception e) {
+							System.out.println(e);
+						}
 					} catch (Exception e) {
 						Toast.show((Stage) App.scene.getWindow(), "Nie udało się wykonać progowania.", 2000);
+						try {
+							if (App.verbosityLevel <= 0) {
+								App.fw.write("=== ERROR: \n    Operacja progowania nie powiodła się"
+										+ LocalDateTime.now() + "\n");
+							}
+						} catch (Exception e2) {
+							System.out.println(e2);
+						}
 					}
 				} else {
 					Toast.show((Stage) App.scene.getWindow(), "Nie udało się wykonać progowania.", 2000);
+					try {
+						if (App.verbosityLevel <= 0) {
+							App.fw.write("=== ERROR: \n    Operacja progrowania nie powiodła się "
+									+ LocalDateTime.now() + "\n");
+						}
+					} catch (Exception e) {
+						System.out.println(e);
+					}
 				}
 			});
 
