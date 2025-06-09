@@ -52,8 +52,8 @@ public class ThresholdingModal {
 						PixelWriter pw = thresholdImage.getPixelWriter();
 						PixelReader tpr = thresholdImage.getPixelReader();
 						PixelReader pr = rightImg.getPixelReader();
-						for (int x = 0; x < rightImg.getHeight(); x++) {
-							for (int y = 0; y < rightImg.getWidth(); y++) {
+						for (int x = 0; x < rightImg.getWidth(); x++) {
+							for (int y = 0; y < rightImg.getHeight(); y++) {
 								pw.setColor(x, y, pr.getColor(x, y).grayscale());
 								if (tpr.getColor(x, y).getRed() * 255 < Double.parseDouble(thresholdInput.getText())) {
 									pw.setColor(x, y, Color.BLACK);
